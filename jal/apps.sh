@@ -14,7 +14,7 @@ sudo apt update
 echo "=== Instalando Apps Extras ==="
 
 # ----------------------
-# Steam (nativa, não Flatpak)
+# Steam 
 # ----------------------
 if ! command_exists steam; then
     echo "Instalando Steam (nativa)..."
