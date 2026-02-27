@@ -6,6 +6,7 @@ source "$(dirname "$0")/core.sh"
 UBUNTU_CODENAME=$(lsb_release -cs)
 
 echo "=== Instalando Databases ==="
+sudo apt update
 
 install_if_missing postgresql
 install_if_missing postgresql-contrib
@@ -26,4 +27,11 @@ if ! dpkg -s mongodb-org >/dev/null 2>&1; then
     sudo apt install -y mongodb-org
 else
     echo "MongoDB já instalado."
+fi
+
+# DBeaver
+if ! snap list | grep -q dbeaver-ce; then
+    sudo snap install dbeaver-ce
+else
+    echo "DBeaver já instalado."
 fi
