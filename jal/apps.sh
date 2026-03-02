@@ -26,11 +26,20 @@ fi
 # ----------------------
 # Discord
 # ----------------------
-if ! command_exists discord; then
-    echo "Instalando Discord..."
-    wget -q -O /tmp/discord.deb "https://discord.com/api/download?platform=linux&format=deb"
-    sudo apt install -y /tmp/discord.deb
-    rm /tmp/discord.deb
+if ! flatpak info com.discordapp.Discord >/dev/null 2>&1; then
+    echo "Instalando Discord via Flatpak..."
+
+    if ! command_exists flatpak; then
+        echo "Flatpak não encontrado. Instalando Flatpak..."
+        sudo apt install -y flatpak
+    fi
+
+    if ! flatpak remote-list --columns=name | grep -q '^flathub$'; then
+        echo "Adicionando repositório Flathub..."
+        sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    fi
+
+    sudo flatpak install -y flathub com.discordapp.Discord
 else
     echo "Discord já instalado."
 fi
